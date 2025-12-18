@@ -1,4 +1,4 @@
-# ecs-eks-demo-app
+# SprintBot web app
 
 ### Spring initializr 
 
