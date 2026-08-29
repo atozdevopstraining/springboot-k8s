@@ -6,8 +6,8 @@ on:
     - cron: "0 2 * * *"
   push:
     branches: [ main, github, ecs ]
-    branches-ignore:
-      - experimental
+    #branches-ignore:
+    #  - experimental
     tags:
       - "v*"
   pull_request:
