@@ -1,9 +1,20 @@
 name: CI - Spring Boot
 
 on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * *"
   push:
     branches: [ main, github, ecs ]
+    branches-ignore:
+      - experimental
+    tags:
+      - "v*"
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
     branches: [ main ]
 
 jobs:
