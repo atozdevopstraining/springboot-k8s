@@ -68,5 +68,5 @@ jobs:
             context: .
             file: ./Dockerfile
             push: true
-            tags: <your-dockerhub-username>/spring-boot-app:latest
+            tags: atozdevopstraining/spring-boot-app:latest
 
