@@ -2,8 +2,8 @@ name: CI - Spring Boot
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 2 * * *"
+  #schedule:
+  #  - cron: "0 2 * * *"
   push:
     branches: [ main, github, ecs ]
     #branches-ignore:
