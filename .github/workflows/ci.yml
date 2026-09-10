@@ -69,12 +69,21 @@ jobs:
             GITHUB_REF_NAME: ${{ github.head_ref || github.ref_name }}
           run: |
             if [ "${GITHUB_REF_NAME}" = "main" ]; then
-              echo "tags=atozdevopstraining/spring-boot-app:latest" >> $GITHUB_OUTPUT
+              TAG="atozdevopstraining/spring-boot-app:latest"
             else
               DATE=$(date -u +"%Y%m%d%H%M%S")
               BRANCH=$(echo "${GITHUB_REF_NAME}" | tr '/' '-')
-              echo "tags=atozdevopstraining/spring-boot-app:${BRANCH}-${DATE}" >> $GITHUB_OUTPUT
+              TAG="atozdevopstraining/spring-boot-app:${BRANCH}-${DATE}"
             fi
+            echo "Computed tag: ${TAG}"
+            echo "tags=${TAG}" >> $GITHUB_OUTPUT
+
+        - name: Debug computed tag
+          run: |
+            echo "set-tags output: '${{ steps.set-tags.outputs.tags }}'"
+            echo "GITHUB_REF: $GITHUB_REF"
+            echo "github.head_ref: ${{ github.head_ref }}"
+            echo "github.ref_name: ${{ github.ref_name }}"
 
         - name: Build and Push Docker image
           uses: docker/build-push-action@v5
