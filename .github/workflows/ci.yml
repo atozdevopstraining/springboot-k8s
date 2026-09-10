@@ -5,17 +5,18 @@ on:
   #schedule:
   #  - cron: "0 2 * * *"
   push:
-    branches: [ main ]
+    branches:
+      - "*"
     #branches-ignore:
     #  - experimental
     tags:
       - "v*"
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-    branches: [ main ]
+  #pull_request:
+  #  types:
+  #    - opened
+  #    - reopened
+  #    - synchronize
+  #  branches: [ main ]
 
 jobs:
   build:
