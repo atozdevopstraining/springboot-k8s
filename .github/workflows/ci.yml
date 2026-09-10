@@ -5,17 +5,18 @@ on:
   #schedule:
   #  - cron: "0 2 * * *"
   push:
-    branches: [ main, github, ecs ]
+    branches:
+      - "*"
     #branches-ignore:
     #  - experimental
     tags:
       - "v*"
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-    branches: [ main ]
+  #pull_request:
+  #  types:
+  #    - opened
+  #    - reopened
+  #    - synchronize
+  #  branches: [ main ]
 
 jobs:
   build:
@@ -62,11 +63,34 @@ jobs:
             username: ${{ secrets.DOCKER_USERNAME }}
             password: ${{ secrets.DOCKER_PASSWORD }}
 
+        - name: Set image tags
+          id: set-tags
+          env:
+            # Use PR head ref when available, otherwise fallback to ref_name
+            GITHUB_REF_NAME: ${{ github.head_ref || github.ref_name }}
+          run: |
+            if [ "${GITHUB_REF_NAME}" = "main" ]; then
+              TAG="atozdevopstraining/spring-boot-app:latest"
+            else
+              DATE=$(date -u +"%Y%m%d%H%M%S")
+              BRANCH=$(echo "${GITHUB_REF_NAME}" | tr '/' '-')
+              TAG="atozdevopstraining/spring-boot-app:${BRANCH}-${DATE}"
+            fi
+            echo "Computed tag: ${TAG}"
+            echo "tags=${TAG}" >> $GITHUB_OUTPUT
+
+        - name: Debug computed tag
+          run: |
+            echo "set-tags output: '${{ steps.set-tags.outputs.tags }}'"
+            echo "GITHUB_REF: $GITHUB_REF"
+            echo "github.head_ref: ${{ github.head_ref }}"
+            echo "github.ref_name: ${{ github.ref_name }}"
+
         - name: Build and Push Docker image
           uses: docker/build-push-action@v5
           with:
             context: .
             file: ./Dockerfile
             push: true
-            tags: atozdevopstraining/spring-boot-app:latest
-
+            # tags are set from the previous step output
+            tags: ${{ steps.set-tags.outputs.tags }}

@@ -3,7 +3,7 @@
 ### Spring initializr 
 
 1. Open https://start.spring.io/
-2. Add actuator and spring web dependecy and select option as below 
+2. Add actuator and spring web dependecy and selects option as below 
 ![SpringInitializer](images/spring-initializer.png)
 
 
