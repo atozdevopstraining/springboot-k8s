@@ -4,7 +4,7 @@
 
 1. Open https://start.spring.io/
 2. Add actuator and spring web dependecy and selects option as below 
-![SpringInitializer](images/spring-initializer.png)
+![SpringInitializer](images/spring-initializer-monitoring.png)
 
 
 ### Dockerfile Setup
