@@ -6,6 +6,20 @@
 2. Add actuator and spring web dependecy and selects option as below 
 ![SpringInitializer](images/spring-initializer-monitoring.png)
 
+### Run on local
+
+```bash
+mvn clean install
+java -jar target/demo-0.0.1-SNAPSHOT.jar --server.port=8081
+```
+
+Check the app locally:
+
+```bash
+http://localhost:8081/
+http://localhost:8081/actuator
+http://localhost:8081/actuator/prometheus
+```
 
 ### Dockerfile Setup
 Create Dockerfile
